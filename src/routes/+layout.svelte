@@ -1,14 +1,15 @@
 <script lang="ts">
-	import ThemeChanger from '$lib/Components/ThemeChanger.svelte';
+	import AppHeader from '$lib/components/AppHeader.svelte';
+	import AppSidebar from '$lib/components/AppSidebar.svelte';
 	import '../app.postcss';
-	import { colorScheme, SvelteUIProvider, useSvelteUITheme } from '@svelteuidev/core';
-	import type { ProviderStyles, SvelteUITheme } from '@svelteuidev/core';
-	const somethin = useSvelteUITheme();
-	somethin.colors.primary.value = '#3728b5';
-	console.log(somethin.colors.primary.value);
 </script>
 
-<SvelteUIProvider theme={somethin} withNormalizeCSS withGlobalStyles themeObserver={$colorScheme}>
-	<ThemeChanger />
-	<slot />
-</SvelteUIProvider>
+<div>
+	<AppHeader />
+	<div class="flex">
+		<AppSidebar />
+		<div>
+			<slot />
+		</div>
+	</div>
+</div>
