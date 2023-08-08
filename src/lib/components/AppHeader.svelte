@@ -22,6 +22,14 @@
 	import AvatarDropdown from './AvatarDropdown.svelte';
 
 	let searchValue = '';
+	let searchMobileIsExpanded = false;
+	let searchMobileInputHasFocus = false;
+	const checkFocus = () => {
+		if (!searchMobileInputHasFocus && searchValue === '') {
+			searchMobileIsExpanded = false;
+			searchMobileInputHasFocus = false;
+		}
+	};
 	// const defaultClass = 'flex item-center font-medium py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600';
 </script>
 
@@ -34,7 +42,7 @@
 			Awesome Company
 		</span>
 	</NavBrand>
-	<div class="mx-32 hidden w-auto flex-grow sm:block">
+	<div class="mx-32 hidden w-full max-w-sm flex-grow sm:block">
 		<Input bind:value={searchValue} placeholder="Search">
 			<i slot="left" class="icon-[lucide--search] h-6 w-6" />
 			<div slot="right">
@@ -56,9 +64,34 @@
 	</div>
 
 	<div class="flex items-center gap-3">
-		<Button pill class="block h-fit w-fit px-2 pb-1 pt-2 sm:hidden">
-			<i class="icon-[lucide--search] h-6 w-6" />
-		</Button>
+		<div class="w-max">
+			{#if !searchMobileIsExpanded}
+				<Button
+					pill
+					class="block h-fit w-fit px-2 pb-1 pt-2 sm:hidden"
+					on:click={() => {
+						searchMobileIsExpanded = !searchMobileIsExpanded;
+						setTimeout(checkFocus, 2000);
+					}}
+				>
+					<i class="icon-[lucide--search] h-6 w-6" />
+				</Button>
+			{/if}
+			{#if searchMobileIsExpanded}
+				<Input
+					placeholder="Search"
+					bind:value={searchValue}
+					on:blur={() => {
+						searchMobileIsExpanded = false;
+						searchMobileInputHasFocus = false;
+					}}
+					on:focus={() => (searchMobileInputHasFocus = true)}
+					class="block h-[41px] w-full"
+				>
+					<i slot="left" class="icon-[lucide--search] h-6 w-6" />
+				</Input>
+			{/if}
+		</div>
 		<DarkMode />
 		<AvatarDropdown />
 	</div>

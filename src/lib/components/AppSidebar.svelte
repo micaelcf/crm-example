@@ -23,7 +23,7 @@
 	let aClass =
 		'flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-300/60 dark:hover:bg-gray-700 [&>i]:hover:text-primary-600 transition-all duration-500';
 	let activeClass =
-		'flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white bg-primary-600 dark:bg-primary-600';
+		'flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white bg-primary-500 dark:bg-primary-500';
 
 	const sidebarMenu: SidebarMenu = [
 		{
@@ -101,7 +101,7 @@
 					</SidebarDropdownWrapper>
 				{/if}
 			{/each}
-			<SidebarDropdownItem />
+			<!-- <SidebarDropdownItem /> -->
 			<!-- <SidebarItem {activeClass} {aClass} label="Dashboard">
 				<svelte:fragment slot="icon">
 					<i class="icon-[lucide--home] h-6 w-6" />

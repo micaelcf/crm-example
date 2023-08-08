@@ -35,17 +35,10 @@
 			</div>
 		</div>
 	</DropdownHeader>
-	<DropdownDivider />
 	<DropdownItem>
 		<div class="flex items-center space-x-3">
 			<i class="icon-[lucide--user] h-5 w-5" />
 			<span>Profile</span>
-		</div>
-	</DropdownItem>
-	<DropdownItem>
-		<div class="flex items-center space-x-3">
-			<i class="icon-[lucide--home] h-5 w-5" />
-			<span>Dashboard</span>
 		</div>
 	</DropdownItem>
 	<DropdownItem>
