@@ -1,0 +1,45 @@
+{
+  "content": [
+    [
+      {
+        "label": "Dashboard",
+        "href": "/",
+        "icon": "home"
+      },
+      {
+        "label": "E-commerce",
+        "href": "/e-commerce",
+        "icon": "dollar-sign",
+        "subMenu": [
+          {
+            "label": "Products",
+            "href": "/e-commerce/products"
+          },
+          {
+            "label": "Billing",
+            "href": "/e-commerce/billing"
+          },
+          {
+            "label": "Invoice",
+            "href": "/e-commerce/invoice"
+          }
+        ]
+      },
+      {
+        "label": "Users",
+        "href": "/users",
+        "icon": "user"
+      },
+      {
+        "label": "Login",
+        "href": "/login",
+        "icon": "log-in"
+      }
+    ]
+  ],
+  "groups": [
+    "",
+    "Apps",
+    "Pages"
+  ]
+}

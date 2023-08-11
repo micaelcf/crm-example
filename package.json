@@ -44,6 +44,7 @@
 		"@melt-ui/svelte": "^0.27.1",
 		"flowbite": "^1.8.0",
 		"flowbite-svelte": "^0.40.2",
-		"tailwind-merge": "^1.14.0"
+		"tailwind-merge": "^1.14.0",
+		"yaml": "^2.3.1"
 	}
 }

@@ -1,40 +1,27 @@
 <script lang="ts">
-	import {
-		Avatar,
-		Button,
-		DarkMode,
-		Dropdown,
-		DropdownDivider,
-		DropdownHeader,
-		DropdownItem,
-		Img,
-		Indicator,
-		Input,
-		NavBrand,
-		NavHamburger,
-		NavLi,
-		NavUl,
-		Navbar,
-		Popover,
-		Search
-	} from 'flowbite-svelte';
-	import { scale, slide } from 'svelte/transition';
+	import { Button, DarkMode, Img, Input, NavBrand, Navbar } from 'flowbite-svelte';
+	import { scale } from 'svelte/transition';
 	import AvatarDropdown from './AvatarDropdown.svelte';
+	import { drawerHidden } from '$lib/stores';
+	import { updated } from '$app/stores';
 
 	let searchValue = '';
-	let searchMobileIsExpanded = false;
-	let searchMobileInputHasFocus = false;
-	const checkFocus = () => {
-		if (!searchMobileInputHasFocus && searchValue === '') {
-			searchMobileIsExpanded = false;
-			searchMobileInputHasFocus = false;
-		}
-	};
 	// const defaultClass = 'flex item-center font-medium py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600';
 </script>
 
-<Navbar fluid>
-	<NavBrand href="/">
+<Navbar navDivClass="flex flex-nowrap min-w-full justify-between">
+	<Button
+		outline
+		color="none"
+		class="black p-2 sm:hidden"
+		on:click={(ev) => {
+			drawerHidden.set(false);
+		}}
+	>
+		<i class="icon-[lucide--menu] h-6 w-6" />
+	</Button>
+
+	<NavBrand href="/" class="hidden items-center sm:flex">
 		<Img src="http://placebeard.it/640x640" class="mr-3 h-10" alt="Awesome Company Logo" />
 		<span
 			class="hidden self-center whitespace-nowrap text-xl font-semibold dark:text-white sm:block"
@@ -42,7 +29,7 @@
 			Awesome Company
 		</span>
 	</NavBrand>
-	<div class="mx-32 hidden w-full max-w-sm flex-grow sm:block">
+	<div class="hidden w-full max-w-xs sm:block">
 		<Input bind:value={searchValue} placeholder="Search">
 			<i slot="left" class="icon-[lucide--search] h-6 w-6" />
 			<div slot="right">
@@ -51,7 +38,7 @@
 						<Button
 							outline
 							class="!p-1"
-							on:click={() => {
+							on:click={(ev) => {
 								searchValue = '';
 							}}
 						>
@@ -64,34 +51,6 @@
 	</div>
 
 	<div class="flex items-center gap-3">
-		<div class="w-max">
-			{#if !searchMobileIsExpanded}
-				<Button
-					pill
-					class="block h-fit w-fit px-2 pb-1 pt-2 sm:hidden"
-					on:click={() => {
-						searchMobileIsExpanded = !searchMobileIsExpanded;
-						setTimeout(checkFocus, 2000);
-					}}
-				>
-					<i class="icon-[lucide--search] h-6 w-6" />
-				</Button>
-			{/if}
-			{#if searchMobileIsExpanded}
-				<Input
-					placeholder="Search"
-					bind:value={searchValue}
-					on:blur={() => {
-						searchMobileIsExpanded = false;
-						searchMobileInputHasFocus = false;
-					}}
-					on:focus={() => (searchMobileInputHasFocus = true)}
-					class="block h-[41px] w-full"
-				>
-					<i slot="left" class="icon-[lucide--search] h-6 w-6" />
-				</Input>
-			{/if}
-		</div>
 		<DarkMode />
 		<AvatarDropdown />
 	</div>
