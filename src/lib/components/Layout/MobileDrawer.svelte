@@ -10,11 +10,11 @@
 		SidebarItem,
 		SidebarWrapper
 	} from 'flowbite-svelte';
-	import { onMount } from 'svelte';
 	import { sineIn } from 'svelte/easing';
-
-	import type { LayoutServerData } from '../../routes/$types';
 	import { page } from '$app/stores';
+	import type { SideBarStruct } from '$lib/structs/sidebar';
+	import Icon from '../Icon.svelte';
+	import logo from '$lib/assets/logo.png';
 
 	let aClass =
 		'flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-300/60 dark:hover:bg-gray-700 [&>i]:hover:text-primary-600 transition-all duration-500';
@@ -22,7 +22,10 @@
 		'flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white bg-primary-500 dark:bg-primary-600';
 
 	export let activeUrl: string;
-	export let data: LayoutServerData;
+	export let struct: SideBarStruct = {
+		content: [],
+		groups: []
+	};
 
 	const handleClick = (ev: MouseEvent) => {
 		setTimeout(() => {
@@ -30,8 +33,8 @@
 		}, 500);
 	};
 
-	const struct = data.struct.content;
-	const groupsNames = data.struct.groups;
+	const content = struct.content;
+	const groupsNames = struct.groups;
 </script>
 
 <svelte:window
@@ -50,12 +53,18 @@
 		easing: sineIn
 	}}
 	width="w-[calc(30vw+10rem)]"
-	class="z-50 overflow-y-auto p-0"
+	class=" overflow-y-auto p-0"
 	bind:hidden={$drawerHidden}
 >
 	<Sidebar class="w-full">
 		<SidebarWrapper>
-			{#each struct as group, i}
+			<div class="mb-4 flex items-center">
+				<img src={logo} alt="Awesome Company Logo" class="h-12 w-12" />
+				<h1 class="self-center whitespace-nowrap pl-3 text-xl font-semibold dark:text-white">
+					Awesome Company
+				</h1>
+			</div>
+			{#each content as group, i}
 				<SidebarGroup>
 					{#if groupsNames[i]}
 						<h3 class="mt-2 font-medium text-black opacity-[.45] dark:text-white">
@@ -63,7 +72,6 @@
 						</h3>
 					{/if}
 					{#each group as item}
-						{@const icon = item.icon ? 'icon-[lucide--' + item.icon + ']' : 'icon-[lucide--dot]'}
 						{#if !item.subMenu}
 							<SidebarItem
 								active={activeUrl === item.href}
@@ -74,7 +82,7 @@
 								on:click={handleClick}
 							>
 								<svelte:fragment slot="icon">
-									<i class="{icon} h-6 w-6" />
+									<Icon icon={item.icon} />
 								</svelte:fragment>
 							</SidebarItem>
 						{:else}
@@ -84,7 +92,7 @@
 								btnClass="{aClass} w-full"
 							>
 								<svelte:fragment slot="icon">
-									<i class="{icon} h-6 w-6" />
+									<Icon icon={item.icon} />
 								</svelte:fragment>
 								{#each item.subMenu as subItem}
 									<SidebarDropdownItem

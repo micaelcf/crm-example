@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { sineOut } from 'svelte/easing';
+	import type { EasingFunction, TransitionConfig } from 'svelte/transition';
 	import {
 		Avatar,
 		Dropdown,
@@ -7,8 +9,27 @@
 		DropdownItem,
 		Indicator
 	} from 'flowbite-svelte';
+	import {
+		CreditCard,
+		DollarSign,
+		HelpCircle,
+		LifeBuoy,
+		LogOut,
+		Settings,
+		User
+	} from 'lucide-svelte';
+	import Icon from '../Icon.svelte';
 	import { scale } from 'svelte/transition';
 	let open = false;
+
+	const scale_down: (node: HTMLElement, params: {}) => TransitionConfig = (node, params) => {
+		return {
+			delay: 0,
+			duration: 200,
+			easing: sineOut,
+			css: (t, u) => `transform-origin: top right; transform: scale(${t});`
+		};
+	};
 </script>
 
 <Avatar
@@ -17,10 +38,7 @@
 	dot={{ color: 'green' }}
 	on:click={() => (open = !open)}
 />
-<!-- {#if opened} -->
-<!-- <div transition:scale> -->
-<!-- <div class=""> -->
-<Dropdown {open} class="z-50 px-2 shadow-xl">
+<Dropdown transition={scale_down} {open} class="z-50 origin-top-right px-2 shadow-xl">
 	<DropdownHeader>
 		<div class="flex items-center space-x-3">
 			<Avatar />
@@ -37,14 +55,14 @@
 	</DropdownHeader>
 	<DropdownItem>
 		<div class="flex items-center space-x-3">
-			<i class="icon-[lucide--user] h-5 w-5" />
+			<Icon icon={User} width="w-5" height="h-5" />
 			<span>Profile</span>
 		</div>
 	</DropdownItem>
 	<DropdownItem>
 		<div class="flex items-center justify-between">
 			<div class="flex items-center space-x-3">
-				<i class="icon-[lucide--credit-card] h-5 w-5" />
+				<Icon icon={CreditCard} width="w-5" height="h-5" />
 				<span> Billing </span>
 			</div>
 			<span
@@ -56,37 +74,34 @@
 	</DropdownItem>
 	<DropdownItem>
 		<div class="flex items-center space-x-3">
-			<i class="icon-[lucide--settings] h-5 w-5" />
+			<Icon icon={Settings} width="w-5" height="h-5" />
 			<span>Settings</span>
 		</div>
 	</DropdownItem>
 	<DropdownDivider />
 	<DropdownItem>
 		<div class="flex items-center space-x-3">
-			<i class="icon-[lucide--dollar-sign] h-5 w-5" />
+			<Icon icon={DollarSign} width="w-5" height="h-5" />
 			<span> Pricing </span>
 		</div>
 	</DropdownItem>
 	<DropdownItem>
 		<div class="flex items-center space-x-3">
-			<i class="icon-[lucide--life-buoy] h-5 w-5" />
+			<Icon icon={LifeBuoy} width="w-5" height="h-5" />
 			<span> Help </span>
 		</div>
 	</DropdownItem>
 	<DropdownItem>
 		<div class="flex items-center space-x-3">
-			<i class="icon-[lucide--help-circle] h-5 w-5" />
+			<Icon icon={HelpCircle} width="w-5" height="h-5" />
 			<span> FAQ </span>
 		</div>
 	</DropdownItem>
 	<DropdownDivider />
 	<DropdownItem>
 		<div class="flex items-center space-x-3">
-			<i class="icon-[lucide--log-out] h-5 w-5" />
+			<Icon icon={LogOut} width="w-5" height="h-5" />
 			<span> Logout </span>
 		</div>
 	</DropdownItem>
 </Dropdown>
-<!-- </div> -->
-<!-- </div> -->
-<!-- {/if} -->

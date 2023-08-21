@@ -9,67 +9,25 @@
 		SidebarDropdownWrapper
 	} from 'flowbite-svelte';
 	import MobileDrawer from './MobileDrawer.svelte';
-	import type { LayoutServerData } from '../../routes/$types';
+	import { sideBarStruct } from '$lib/structs/sidebar';
+	import Icon from '../Icon.svelte';
 
 	let aClass =
 		'flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-300/60 dark:hover:bg-gray-700 [&>i]:hover:text-primary-600 transition-all duration-500';
 	let activeClass =
 		'flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white bg-primary-500 dark:bg-primary-600';
 
-	export let data: LayoutServerData;
-	// {
-	// 	content: [
-	// 		[
-	// 			{
-	// 				label: 'Dashboard',
-	// 				href: '/',
-	// 				icon: 'home'
-	// 			},
-	// 			{
-	// 				label: 'E-commerce',
-	// 				href: '/e-commerce',
-	// 				icon: 'dollar-sign',
-	// 				subMenu: [
-	// 					{
-	// 						label: 'Products',
-	// 						href: '/e-commerce/products'
-	// 					},
-	// 					{
-	// 						label: 'Billing',
-	// 						href: '/e-commerce/billing'
-	// 					},
-	// 					{
-	// 						label: 'Invoice',
-	// 						href: '/e-commerce/invoice'
-	// 					}
-	// 				]
-	// 			},
-	// 			{
-	// 				label: 'Users',
-	// 				href: '/users',
-	// 				icon: 'user'
-	// 			}
-	// 		],
-	// 		[
-	// 			{
-	// 				label: 'Login',
-	// 				href: '/login',
-	// 				icon: 'log-in'
-	// 			}
-	// 		]
-	// 	],
-	// 	groups: ['', 'Apps', 'Pages']
-	// };
 	$: activeUrl = $page.url.pathname;
-	// let struct = ''
-	const struct = data.struct.content;
-	const groupsNames = data.struct.groups;
+	const content = sideBarStruct.content;
+	const groupsNames = sideBarStruct.groups;
 </script>
 
-<div class="hidden w-[calc(10vw+10rem)] min-w-max max-w-[18rem] sm:block">
+<div
+	class="hidden min-h-screen w-[calc(10vw+10rem)] min-w-max max-w-[18rem] overflow-y-auto bg-gray-50 dark:bg-gray-800 sm:block"
+>
 	<Sidebar class="w-full">
 		<SidebarWrapper>
-			{#each struct as group, i}
+			{#each content as group, i}
 				<SidebarGroup>
 					{#if groupsNames[i]}
 						<h3 class="mt-2 font-medium text-black opacity-[.45] dark:text-white">
@@ -88,13 +46,16 @@
 								href={item.href}
 							>
 								<svelte:fragment slot="icon">
-									<i class="{icon} h-6 w-6" />
+									<Icon icon={item.icon} />
 								</svelte:fragment>
 							</SidebarItem>
 						{:else}
 							<SidebarDropdownWrapper label={item.label} btnClass="{aClass} w-full">
 								<svelte:fragment slot="icon">
-									<i class="{icon} h-6 w-6" />
+									<Icon icon={item.icon} />
+									<!-- <i class="h-6 w-6">
+										<svelte:component this={item.icon} size="100%" />
+									</i> -->
 								</svelte:fragment>
 								{#each item.subMenu as subItem}
 									<SidebarDropdownItem
@@ -112,4 +73,4 @@
 		</SidebarWrapper>
 	</Sidebar>
 </div>
-<MobileDrawer {activeUrl} {data} />
+<MobileDrawer struct={sideBarStruct} {activeUrl} />
